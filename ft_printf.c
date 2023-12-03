@@ -6,7 +6,7 @@
 /*   By: olamrabt <olamrabt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 18:31:28 by olamrabt          #+#    #+#             */
-/*   Updated: 2023/12/03 18:16:33 by olamrabt         ###   ########.fr       */
+/*   Updated: 2023/12/03 18:52:39 by olamrabt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int ft_printf(const char *str, ...)
             count += write(1, &str[i++], 1);
         if (str[i] && str[i++] == '%')
         {
-            if (str[i]!= '%')
+            if (str[i] && str[i]!= '%')
                 count += handle_spe(str[i++], ap);
             else if (str[i])
                 count += write(1, &str[i++], 1);

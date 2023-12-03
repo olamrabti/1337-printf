@@ -6,20 +6,22 @@
 /*   By: olamrabt <olamrabt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 18:45:42 by olamrabt          #+#    #+#             */
-/*   Updated: 2023/12/03 18:08:02 by olamrabt         ###   ########.fr       */
+/*   Updated: 2023/12/03 19:39:41 by olamrabt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int print_nbr_base(long nbr, int base, int to_upper)
+int print_nbr_base(long long nbr, int base, int to_upper)
 {
     char *base_str;
 
     base_str = "0123456789abcdef";
     if (to_upper)
         base_str = "0123456789ABCDEF";
-    if (nbr < 0)
+    if (nbr == LONG_MIN)
+        return print_nbr_base(-(nbr / base), base, to_upper) + print_nbr_base(-(nbr % base), base, to_upper);
+    else if (nbr < 0)
         return (write(1, "-", 1) + print_nbr_base(-nbr, base, to_upper));
     else if (nbr < base)
         return write(1, &base_str[nbr], 1);
@@ -30,7 +32,7 @@ int print_str(char *str)
 {
     int count;
     count = 0;
-    if(!str)
+    if (!str)
         return print_str("(null)");
     while (str[count])
         count += write(1, &str[count], 1);
@@ -55,7 +57,7 @@ int handle_spe(char sp, va_list ap)
     if (sp == 'X')
         return print_nbr_base(va_arg(ap, unsigned int), 16, 1);
     if (sp == 'p')
-        return print_str("0x") + print_nbr_base(va_arg(ap, unsigned int), 16, 0);
+        return print_str("0x") + print_nbr_base(va_arg(ap, unsigned long), 16, 0);
     c = (char)va_arg(ap, int);
     return write(1, &c, 1);
 }
