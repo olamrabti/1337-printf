@@ -6,7 +6,7 @@
 #    By: olamrabt <olamrabt@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/01 14:19:37 by olamrabt          #+#    #+#              #
-#    Updated: 2023/12/03 18:36:42 by olamrabt         ###   ########.fr        #
+#    Updated: 2023/12/04 18:56:26 by olamrabt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,10 +20,10 @@ FLAGS = -Wall -Werror -Wextra
 
 RM = rm -f
 
-all: $(NAME) clean #hna clean thyd mn b3d
+all: $(NAME)
 
 $(NAME): $(OBJS)
-	ar -r $(NAME) $(OBJS)
+	ar -rc $(NAME) $(OBJS)
 
 %.o: %.c ft_printf.h
 	cc $(FLAGS) -c $<
