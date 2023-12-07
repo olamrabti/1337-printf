@@ -6,24 +6,24 @@
 /*   By: olamrabt <olamrabt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 18:45:42 by olamrabt          #+#    #+#             */
-/*   Updated: 2023/12/04 19:11:31 by olamrabt         ###   ########.fr       */
+/*   Updated: 2023/12/07 11:10:32 by olamrabt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	print_base(long n, int b, int to_upper)
+int	print_base(long n, int b, int to_up)
 {
 	char	*b_str;
 
 	b_str = "0123456789abcdef";
-	if (to_upper)
+	if (to_up)
 		b_str = "0123456789ABCDEF";
 	if (n < 0)
-		return (write(1, "-", 1) + print_base(-n, b, to_upper));
+		return (write(1, "-", 1) + print_base(-n, b, to_up));
 	if (n < b)
 		return (write(1, &b_str[n], 1));
-	return (print_base(n / b, b, to_upper) + print_base(n % b, b, to_upper));
+	return (print_base(n / b, b, to_up) + print_base(n % b, b, to_up));
 }
 
 int	print_adr(unsigned long long un)
@@ -68,4 +68,9 @@ int	handle_spe(char sp, va_list ap)
 		return (print_str("0x") + print_adr(va_arg(ap, unsigned long long)));
 	c = (char)va_arg(ap, int);
 	return (write(1, &c, 1));
+}
+
+int	check_w(void)
+{
+	return (write(1, "", 0));
 }

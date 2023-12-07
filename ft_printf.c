@@ -6,7 +6,7 @@
 /*   By: olamrabt <olamrabt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 18:31:28 by olamrabt          #+#    #+#             */
-/*   Updated: 2023/12/04 19:11:23 by olamrabt         ###   ########.fr       */
+/*   Updated: 2023/12/07 11:11:39 by olamrabt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,24 @@ int	ft_printf(const char *str, ...)
 	va_list	ap;
 	int		count;
 
-	count = 0;
+	count = check_w();
 	va_start(ap, str);
-	if (write(1, "", 0) == -1)
-		return (-1);
-	while (*str)
+	while (count >= 0 && *str)
 	{
-		if (*str == '%' && (*(++str) != '%'))
-			count += handle_spe(*(str++), ap);
-		else
+		while (*str && *str != '%')
 			count += write(1, str++, 1);
+		if (*str && *(str++) == '%')
+		{
+			if (*str && *str != '%')
+				count += handle_spe(*str++, ap);
+			else if (*str)
+				count += write(1, str++, 1);
+		}
+		else if (*str)
+		{
+			count += handle_spe(*str, ap);
+			str += count + 1;
+		}
 	}
 	va_end(ap);
 	return (count);
