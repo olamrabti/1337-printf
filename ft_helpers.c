@@ -6,7 +6,7 @@
 /*   By: olamrabt <olamrabt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 18:45:42 by olamrabt          #+#    #+#             */
-/*   Updated: 2023/12/07 11:10:32 by olamrabt         ###   ########.fr       */
+/*   Updated: 2023/12/08 09:20:15 by olamrabt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,7 @@ int	handle_spe(char sp, va_list ap)
 		return (print_base(va_arg(ap, unsigned int), 16, 1));
 	if (sp == 'p')
 		return (print_str("0x") + print_adr(va_arg(ap, unsigned long long)));
-	c = (char)va_arg(ap, int);
-	return (write(1, &c, 1));
+	return (0);
 }
 
 int	check_w(void)
